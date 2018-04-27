@@ -12,7 +12,7 @@ var articlesModel = function () {
     auteur: String,
     date: { type: Date, default: Date.now },
     prix: Number,
-    vote: Number
+    vote: { type: Number, default: 0 }
   });
  
 

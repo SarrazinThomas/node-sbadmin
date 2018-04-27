@@ -158,16 +158,22 @@ module.exports = function(app, passport){
 		
 		var newArticle = new Articles();
 		// set the user's local credentials
+		/*
 		newArticle.title = "Harry Potter";
 		newArticle.text = "Tome 1";
 		newArticle.auteur = "J.K Rowling";
 		newArticle.date = Date.UTC(97, 06, 26, 12, 00, 00, 00);
 		newArticle.prix = "8";
-		/*
+
 		newArticle.content = req.param('content');
 		newArticle.vote = 0;
 		newArticle.username = req.user.username;
 		*/
+		newArticle.title = req.param('title');
+		newArticle.text = req.param('text');
+		newArticle.auteur = req.param('auteur');
+		newArticle.date = req.param('date');
+		newArticle.prix = req.param('prix');
 		// save the user
 		newArticle.save(function(err) {
 			if (err){
