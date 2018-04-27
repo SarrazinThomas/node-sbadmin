@@ -208,8 +208,8 @@ module.exports = function(app, passport){
 			  console.log('Error in Saving Articles: '+err);  
 			  res.send({"result":false});
 			}
-			Articles.vote +=1;
-			Articles.save(function(){
+			article.vote +=1;
+			article.save(function(){
 				res.send({"result":true});	
 			})
 			
