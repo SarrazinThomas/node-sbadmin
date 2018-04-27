@@ -1,7 +1,8 @@
 {
 
   "mongodb": {
-  	"address":"localhost:27017"
+    "address":"uzwevmj2w1nktf1:ZfnHglgW9AyuQrP3jcYl@bypglzujbto78g9-mongodb.services.clever-cloud.com:27017",
+    "dbname":"bypglzujbto78g9"
   }
 
 }

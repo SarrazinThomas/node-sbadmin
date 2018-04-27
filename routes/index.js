@@ -1,4 +1,5 @@
 var Bbs = require('../persister/bbs');
+var Articles = require('../persister/articles');
 
 module.exports = function(app, passport){
 	
@@ -76,6 +77,9 @@ module.exports = function(app, passport){
   	app.get('/bbs',isAuthenticated, function(req, res) {
 	   res.render('template/bbs', {});
 	});
+  	app.get('/articles',isAuthenticated, function(req, res) {
+	   res.render('template/listeArticles', {});
+	});
 	
 	app.get('/bbs/list',isAuthenticated, function(req, res) {
 		 Bbs.find({}, 
@@ -133,6 +137,73 @@ module.exports = function(app, passport){
 			}
 			bbs.vote +=1;
 			bbs.save(function(){
+				res.send({"result":true});	
+			})
+			
+		})
+	});
+	app.get('/articles/list', function(req, res) {
+		Articles.find({}, 
+	      function(err, article) {
+	        // In case of any error, return using the done method
+	        if (err)
+	          return done(err);
+	        // Username does not exist, log error & redirect back
+	        res.send(article);
+	      }
+	    );
+	});
+
+	app.post('/articles/create',isAuthenticated, function(req, res) {
+		
+		var newArticle = new Articles();
+		// set the user's local credentials
+		newArticle.title = "Harry Potter";
+		newArticle.text = "Tome 1";
+		newArticle.auteur = "J.K Rowling";
+		newArticle.date = Date.UTC(97, 06, 26, 12, 00, 00, 00);
+		newArticle.prix = "8";
+		/*
+		newArticle.content = req.param('content');
+		newArticle.vote = 0;
+		newArticle.username = req.user.username;
+		*/
+		// save the user
+		newArticle.save(function(err) {
+			if (err){
+			  console.log('Error in Saving article: '+err);  
+			  res.send({"result":false});
+			}
+			res.send({"result":true});
+		});
+	});
+
+	app.post('/articles/delete',isAuthenticated, function(req, res) {
+		// set the user's local credentials
+		var id = req.param('id');
+		Articles.findByIdAndRemove(id,function(err){
+			if (err){
+			  console.log('Error in Saving bbs: '+err);  
+			  res.send({"result":false});
+			}
+
+
+			res.send({"result":true});
+		})
+
+		
+	});
+	app.post('/articles/update',isAuthenticated, function(req, res) {
+		// set the user's local credentials
+		var id = req.param('id');
+
+		Articles.findById(id,function(err,article){
+			if (err){
+			  console.log('Error in Saving Articles: '+err);  
+			  res.send({"result":false});
+			}
+			Articles.vote +=1;
+			Articles.save(function(){
 				res.send({"result":true});	
 			})
 			
